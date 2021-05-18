@@ -12,3 +12,4 @@ def isPalindromePermutation(phrase):
 print(isPalindromePermutation('gigi'))
 print(isPalindromePermutation('kkassrurua'))
 print(isPalindromePermutation('pena'))
+print(isPalindromePermutation('asdasd'))
