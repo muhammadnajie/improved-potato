@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"strings"
+	"mergesort/helper"
 	"time"
 
 	"github.com/bxcodec/faker/v3"
@@ -50,8 +50,7 @@ func mergeSort(items StudentGradeList) StudentGradeList {
 }
 
 func merge(left StudentGradeList, right StudentGradeList) StudentGradeList {
-	// var temp = make(StudentGradeList, len(left)+len(right))
-	temp := StudentGradeList{}
+	var temp = make(StudentGradeList, 0)
 
 	i := 0
 	j := 0
@@ -66,41 +65,28 @@ func merge(left StudentGradeList, right StudentGradeList) StudentGradeList {
 		}
 	}
 
-	for ; i < len(left); i++ {
-		temp = append(temp, left[i])
+	if i >= len(left) {
+		temp = append(temp, right[j:]...)
+	} else if j >= len(right) {
+		temp = append(temp, left[i:]...)
 	}
-	for ; j < len(right); j++ {
-		temp = append(temp, right[j])
-	}
-
-	// if i > len(left) {
-	// 	temp = append(temp, right[j:]...)
-	// } else {
-	// 	temp = append(temp, left[i:]...)
-	// }
 
 	return temp
 }
 
-func arrayToString(a []uint, delim string) string {
-	return strings.Trim(strings.Replace(fmt.Sprint(a), " ", delim, -1), "[]")
-	//return strings.Trim(strings.Join(strings.Split(fmt.Sprint(a), " "), delim), "[]")
-	//return strings.Trim(strings.Join(strings.Fields(fmt.Sprint(a)), delim), "[]")
-}
-
 func main() {
-	list := GenerateStudentGradeList(5)
+	list := GenerateStudentGradeList(15)
 	temp := make([]uint, 0)
 	for _, l := range list {
 		temp = append(temp, l.Grade)
 	}
 
-	fmt.Println(arrayToString(temp, ","))
+	fmt.Println(helper.ArrayToString(temp, ","))
 
 	list = mergeSort(list)
 	temp = []uint{}
 	for _, l := range list {
 		temp = append(temp, l.Grade)
 	}
-	fmt.Println(arrayToString(temp, ","))
+	fmt.Println(helper.ArrayToString(temp, ","))
 }
